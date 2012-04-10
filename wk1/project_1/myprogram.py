@@ -8,14 +8,23 @@ outfile = open(sys.argv[2],'w')
 for line in infile:
   i = line.split()
 
+  if len(i) < 3:
+    j = False
+
   if i[0] == "+":
     j = int(i[1])+int(i[2])
   elif i[0] == "-":
     j = int(i[1])-int(i[2])
   elif i[0] == "*":
-    j = int(i[1])*int(i[2])
+    if len(i) > 3:
+      j = False
+    else:
+      j = int(i[1])*int(i[2])
   elif i[0] == "/":
-    j = float(i[1])*float(i[2])
+    if len(i) > 3:
+      j = False
+    else:
+      j = float(i[1])*float(i[2])
   else:
     j = False
 
