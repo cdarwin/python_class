@@ -6,32 +6,43 @@ infile = open(sys.argv[1],'r')
 outfile = open(sys.argv[2],'w')
 
 for line in infile:
-  i = line.split()
+  num = line.split()
+  s = ""
 
-  if len(i) < 3:
-    j = False
+  if len(num) < 3:
+    outfile.write("Malformed line\n")
 
-  if i[0] == "+":
-    j = int(i[1])+int(i[2])
-  elif i[0] == "-":
-    j = int(i[1])-int(i[2])
-  elif i[0] == "*":
-    if len(i) > 3:
-      j = False
+  if num[0] == "+":
+    res = 0
+    for i in range(len(num)-2):
+      res += int(num[i+1])
+      s += "{0} + ".format(num[i+1])
+    res += int(num[-1])
+    s += "{0} = {1}\n".format(num[-1], res)
+    outfile.write(s)
+  elif num[0] == "-":
+    res = int(num[1])
+    for i in range(len(num)-2):
+      res -= int(num[i+2])
+      s += "{0} - ".format(num[i+1])
+    s += "{0} = {1}\n".format(num[-1], res)
+    outfile.write(s)
+  elif num[0] == "*":
+    if len(num) > 3:
+      outfile.write("Malformed line\n")
     else:
-      j = int(i[1])*int(i[2])
-  elif i[0] == "/":
-    if len(i) > 3:
-      j = False
+      res = int(num[1])*int(num[2])
+      s = "{0} * {1} = {2}\n".format(num[1], num[2], res)
+      outfile.write(s)
+  elif num[0] == "/":
+    if len(num) > 3:
+      outfile.write("Malformed line\n")
     else:
-      j = float(i[1])*float(i[2])
+      res = float(num[1])*float(num[2])
+      s = "{0} / {1} = {2}\n".format(num[1], num[2], res)
+      outfile.write(s)
   else:
-    j = False
-
-  s = "{0} {1} {2} = {3}\n".format(i[1], i[0], i[2], j)
-  if j == False:
-    s = "Malformed line\n"
-  outfile.write(s)
+    outfile.write("Malformed line\n")
 
 infile.close()
 outfile.close()
