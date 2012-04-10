@@ -17,9 +17,11 @@ for line in infile:
   elif i[0] == "/":
     j = float(i[1])*float(i[2])
   else:
-    break
+    j = False
 
   s = "{0} {1} {2} = {3}\n".format(i[1], i[0], i[2], j)
+  if j == False:
+    s = "Malformed line\n"
   outfile.write(s)
 
 infile.close()
